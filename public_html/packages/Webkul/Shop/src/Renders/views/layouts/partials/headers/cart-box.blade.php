@@ -42,16 +42,16 @@
                             <li>Total <span>$64.95</span></li>
                         </ul>
                         <div class="cart-actions text-center">
-                            <a class="cart-checkout" href="checkout.html">Checkout</a>
+                            <a class="cart-checkout" href="checkout.html">{{ __('shop::app.headers.checkout') }}</a>
                         </div>
                     </div>
                     <!-- Cart Footer Inner End -->
                 </li>
             </ul>
         </li>
-        <li><a href="#"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Wish</span><span>list (0)</span></span></a>
+        <li><a href="#"><i class="lnr lnr-heart"></i><span class="my-cart"><span>{{ __('shop::app.headers.wish') }}</span><span>{{ __('shop::app.headers.list') }} (0)</span></span></a>
         </li>
-        <li><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Sign in</strong> Or</span><span> Join My Site</span></span></a>
+        <li><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>{{ __('shop::app.headers.sign-in') }}</strong> {{ __('shop::app.headers.or') }}</span><span> {{ __('shop::app.headers.join-my-site') }}</span></span></a>
 
 
 

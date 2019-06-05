@@ -24,7 +24,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            ['shop::layouts.partials.category-main'],
+            ['shop::layouts.partials.category-main', 'shop::layouts.partials.headers.search'],
             'Webkul\Shop\Http\ViewComposers\CategoryComposer'
         );
 

@@ -2,7 +2,7 @@
 <div class="header-top-area">
     <div class="container">
         <!-- Header Top Start -->
-        @include('shop::layouts.partials.header-top')
+        @include('shop::layouts.partials.headers.header-top')
         <!-- Header Top End -->
     </div>
     <!-- Container End -->
@@ -19,12 +19,12 @@
             </div>
             <!-- Categorie Search Box Start Here -->
             <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
-                @include('shop::layouts.partials.search')
+                @include('shop::layouts.partials.headers.search')
             </div>
             <!-- Categorie Search Box End Here -->
             <!-- Cart Box Start Here -->
             <div class="col-lg-4 col-md-12">
-                @include('shop::layouts.partials.cart-box')
+                @include('shop::layouts.partials.headers.cart-box')
             </div>
             <!-- Cart Box End Here -->
         </div>
@@ -36,7 +36,7 @@
 <!-- Header Bottom Start Here -->
 <div class="header-bottom  header-sticky">
     <div class="container">
-        @include('shop::layouts.partials.menu-main')
+        @include('shop::layouts.partials.headers.menu-main')
     </div>
     <!-- Container End -->
 </div>
@@ -44,7 +44,7 @@
 <!-- Mobile Vertical Menu Start Here -->
 <div class="container d-block d-lg-none">
     <div class="vertical-menu mt-30">
-        <span class="categorie-title mobile-categorei-menu">Shop by Categories</span>
+        <span class="categorie-title mobile-categorei-menu">{{ __('shop::app.menu.shop-by-categories') }}</span>
         <nav>
             <div id="cate-mobile-toggle" class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden ">
                 <ul>

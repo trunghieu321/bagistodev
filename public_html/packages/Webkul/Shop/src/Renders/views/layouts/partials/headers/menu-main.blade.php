@@ -1,6 +1,6 @@
 <div class="row align-items-center">
     <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
-        <span class="categorie-title">Shop by Categories </span>
+        <span class="categorie-title">{{ __('shop::app.menu.shop-by-categories') }}</span>
     </div>
     <div class="col-xl-9 col-lg-8 col-md-12 ">
         <nav class="d-none d-lg-block">
@@ -79,7 +79,7 @@
                             <li><a href="product.html">product details</a></li>
                             <li><a href="compare.html">compare</a></li>
                             <li><a href="cart.html">cart</a></li>
-                            <li><a href="checkout.html">checkout</a></li>
+                            <li><a href="checkout.html">{{ __('shop::header.checkout') }}</a></li>
                             <li><a href="wishlist.html">wishlist</a></li>
                         </ul>
                         <!-- Mobile Menu Dropdown End -->
