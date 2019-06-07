@@ -538,6 +538,72 @@ class ProductRepository extends Repository
             get_class($this->model), $slug
         );
     }
+
+    /**
+     * Get product deal
+     * @return array
+     */
+    public function getDealProducts() {
+        $channel = request()->get('channel') ?: (core()->getCurrentChannelCode() ?: core()->getDefaultChannelCode());
+        $locale = request()->get('locale') ?: app()->getLocale();
+
+        $buildSql = DB::table('categories')
+            ->select(
+                'categories.id as cate_id', 'categories.position as cate_position',
+                'category_translations.id as cate_trans_id', 'category_translations.name as cate_trans_name', 'category_translations.slug as cate_trans_slug',
+                'products.id as pro_id', 'products.type as pro_type',
+
+                'product_flat.id as pro_flat_id', 'product_flat.sku as pro_flat_sku', 'product_flat.name as pro_flat_name',
+                'product_flat.description as pro_flat_desc',  'product_flat.url_key as pro_flat_url_key', 'product_flat.new as pro_flat_new',
+                'product_flat.featured as pro_flat_featured',  'product_flat.status as pro_flat_status', 'product_flat.thumbnail as pro_flat_thumbnail',
+                'product_flat.price as pro_flat_price',  'product_flat.cost as pro_flat_cost', 'product_flat.special_price as pro_flat_special_price',
+                'product_flat.special_price_from as pro_flat_special_price_from',  'product_flat.special_price_to as pro_flat_special_price_to', 'product_flat.weight as pro_flat_weight',
+                'product_flat.color as pro_flat_color',  'product_flat.color_label as pro_flat_color_label', 'product_flat.size as pro_flat_size', 'product_flat.size_label as pro_flat_size_label',
+                'product_flat.locale as pro_flat_locale',  'product_flat.channel as pro_flat_channel', 'product_flat.min_price as pro_flat_min_price', 'product_flat.max_price as pro_flat_max_price',
+
+                'product_images.id as pro_img_id', 'product_images.path as pro_img_path'
+            )
+            ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
+            ->join('product_categories', 'product_categories.category_id', '=', 'categories.id')
+            ->join('products', 'products.id', '=', 'product_categories.product_id')
+            ->join('product_flat', 'product_flat.product_id', '=', 'products.id')
+            ->join('product_images', 'product_images.product_id', '=', 'products.id')
+            ->where('product_flat.status', 1)
+            ->where('product_flat.visible_individually', 1)
+            ->where('product_flat.cost', '>', 0)
+            ->where('product_flat.channel', $channel)
+            ->where('product_flat.locale', $locale)
+            ->orderBy('product_flat.product_id', 'desc');
+
+        $results = [];
+        foreach ($buildSql->cursor() as $products) {
+            if(isset($results[$products->pro_flat_id])) {
+                $results[$products->pro_flat_id]['product_images'][] =
+                    [
+                        'pro_img_id' => $products->pro_img_id,
+                        'pro_img_path' => $products->pro_img_path
+                    ];
+            } else {
+                $results[$products->pro_flat_id] = array(
+                    'pro_flat_id' => $products->pro_flat_id,
+                    'pro_flat_name' => $products->pro_flat_name,
+                    'pro_flat_price' => $products->pro_flat_price,
+                    'pro_flat_url_key' => $products->pro_flat_url_key,
+                    'pro_flat_cost' => $products->pro_flat_cost,
+                    'cate_trans_id' => $products->cate_trans_id,
+                    'cate_trans_name' => $products->cate_trans_name,
+                    'cate_trans_slug' => $products->cate_trans_slug
+
+                );
+                $results[$products->pro_flat_id]['product_images'][] = array(
+                    'pro_img_id' => $products->pro_img_id,
+                    'pro_img_path' => $products->pro_img_path
+                );
+            }
+        }
+
+        return $results;
+    }
     //TODO: Please check where price > cost, cost > 0
     /**
      * Get product best sell
@@ -593,6 +659,7 @@ class ProductRepository extends Repository
                 $products['products'][$valProduct->pro_flat_id] = array(
                     'pro_flat_id' => $valProduct->pro_flat_id,
                     'pro_flat_name' => $valProduct->pro_flat_name,
+                    'pro_flat_url_key' => $valProduct->pro_flat_url_key,
                     'pro_flat_price' => $valProduct->pro_flat_price,
                     'pro_flat_cost' => $valProduct->pro_flat_cost,
                     'cate_trans_id' => $valProduct->cate_trans_id,
@@ -672,6 +739,7 @@ class ProductRepository extends Repository
                 $products['products'][$valProduct->pro_flat_id] = array(
                     'pro_flat_id' => $valProduct->pro_flat_id,
                     'pro_flat_name' => $valProduct->pro_flat_name,
+                    'pro_flat_url_key' => $valProduct->pro_flat_url_key,
                     'pro_flat_price' => $valProduct->pro_flat_price,
                     'pro_flat_cost' => $valProduct->pro_flat_cost,
                     'cate_trans_id' => $valProduct->cate_trans_id,
@@ -707,22 +775,64 @@ class ProductRepository extends Repository
      */
     public function getFeaturedProducts()
     {
-        $results = app('Webkul\Product\Repositories\ProductFlatRepository')->scopeQuery(function($query) {
-                $channel = request()->get('channel') ?: (core()->getCurrentChannelCode() ?: core()->getDefaultChannelCode());
+        $channel = request()->get('channel') ?: (core()->getCurrentChannelCode() ?: core()->getDefaultChannelCode());
+        $locale = request()->get('locale') ?: app()->getLocale();
 
-                $locale = request()->get('locale') ?: app()->getLocale();
+        $buildSql = DB::table('categories')
+            ->select(
+                'categories.id as cate_id', 'categories.position as cate_position',
+                'category_translations.id as cate_trans_id', 'category_translations.name as cate_trans_name', 'category_translations.slug as cate_trans_slug',
+                'products.id as pro_id', 'products.type as pro_type',
 
-                return $query->distinct()
-                        ->addSelect('product_flat.*')
-                        ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
-                        ->leftJoin('product_categories', 'products.id', '=', 'product_categories.product_id')
-                        ->where('product_flat.status', 1)
-                        ->where('product_flat.visible_individually', 1)
-                        ->where('product_flat.featured', 1)
-                        ->where('product_flat.channel', $channel)
-                        ->where('product_flat.locale', $locale)
-                        ->orderBy('product_id', 'desc');
-            })->paginate(4);
+                'product_flat.id as pro_flat_id', 'product_flat.sku as pro_flat_sku', 'product_flat.name as pro_flat_name',
+                'product_flat.description as pro_flat_desc',  'product_flat.url_key as pro_flat_url_key', 'product_flat.new as pro_flat_new',
+                'product_flat.featured as pro_flat_featured',  'product_flat.status as pro_flat_status', 'product_flat.thumbnail as pro_flat_thumbnail',
+                'product_flat.price as pro_flat_price',  'product_flat.cost as pro_flat_cost', 'product_flat.special_price as pro_flat_special_price',
+                'product_flat.special_price_from as pro_flat_special_price_from',  'product_flat.special_price_to as pro_flat_special_price_to', 'product_flat.weight as pro_flat_weight',
+                'product_flat.color as pro_flat_color',  'product_flat.color_label as pro_flat_color_label', 'product_flat.size as pro_flat_size', 'product_flat.size_label as pro_flat_size_label',
+                'product_flat.locale as pro_flat_locale',  'product_flat.channel as pro_flat_channel', 'product_flat.min_price as pro_flat_min_price', 'product_flat.max_price as pro_flat_max_price',
+
+                'product_images.id as pro_img_id', 'product_images.path as pro_img_path'
+            )
+            ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
+            ->join('product_categories', 'product_categories.category_id', '=', 'categories.id')
+            ->join('products', 'products.id', '=', 'product_categories.product_id')
+            ->join('product_flat', 'product_flat.product_id', '=', 'products.id')
+            ->join('product_images', 'product_images.product_id', '=', 'products.id')
+            ->where('product_flat.status', 1)
+            ->where('product_flat.visible_individually', 1)
+            ->where('product_flat.featured', '1')
+            ->where('product_flat.channel', $channel)
+            ->where('product_flat.locale', $locale)
+            ->orderBy('product_flat.product_id', 'desc');
+
+        $results = [];
+        foreach ($buildSql->cursor() as $products) {
+            if(isset($results[$products->pro_flat_id])) {
+                $results[$products->pro_flat_id]['product_images'][] =
+                    [
+                        'pro_img_id' => $products->pro_img_id,
+                        'pro_img_path' => $products->pro_img_path
+                    ];
+            } else {
+                $results[$products->pro_flat_id] = array(
+                    'pro_flat_id' => $products->pro_flat_id,
+                    'pro_flat_name' => $products->pro_flat_name,
+                    'pro_flat_price' => $products->pro_flat_price,
+                    'pro_flat_url_key' => $products->pro_flat_url_key,
+                    'pro_flat_cost' => $products->pro_flat_cost,
+                    'cate_trans_id' => $products->cate_trans_id,
+                    'cate_trans_name' => $products->cate_trans_name,
+                    'cate_trans_slug' => $products->cate_trans_slug
+
+                );
+                $results[$products->pro_flat_id]['product_images'][] = array(
+                    'pro_img_id' => $products->pro_img_id,
+                    'pro_img_path' => $products->pro_img_path
+                );
+            }
+        }
+
         return $results;
     }
 

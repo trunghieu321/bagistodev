@@ -54,6 +54,6 @@ class ProductController extends Controller
 
         $customer = auth()->guard('customer')->user();
 
-        return view($this->_config['view'], compact('product','customer'));
+        return view($this->_config['view'])->with('product', $product);
     }
 }

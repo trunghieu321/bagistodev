@@ -12,7 +12,7 @@ use Webkul\Product\Repositories\ProductRepository as Product;
  * @author    Jitendra Singh <jitendra@webkul.com>
  * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
  */
-class BestSellProductListComposer
+class DealProductListComposer
 {
     /**
      * ProductRepository object
@@ -40,7 +40,7 @@ class BestSellProductListComposer
      */
     public function compose(View $view)
     {
-        $products = $this->product->getBestSellProducts();
+        $products = $this->product->getDealProducts();
 
         $view->with('products', $products);
     }
