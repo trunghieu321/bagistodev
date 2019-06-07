@@ -544,8 +544,6 @@ class ProductRepository extends Repository
      * @return array
      */
     public function getDealProducts() {
-        $products = array();
-
         $channel = request()->get('channel') ?: (core()->getCurrentChannelCode() ?: core()->getDefaultChannelCode());
         $locale = request()->get('locale') ?: app()->getLocale();
 
@@ -577,35 +575,36 @@ class ProductRepository extends Repository
             ->where('product_flat.locale', $locale)
             ->orderBy('product_flat.product_id', 'desc');
 
-        foreach($buildSql->cursor() as $valProduct) {
-            if(isset($products['products'][$valProduct->pro_flat_id])) {
-                $products['products'][$valProduct->pro_flat_id]['product_images'][] =
+
+        $results = [];
+        foreach ($buildSql->cursor() as $products) {
+            if(isset($results[$products->pro_flat_id])) {
+                $results[$products->pro_flat_id]['product_images'][] =
                     [
-                        'pro_img_id' => $valProduct->pro_img_id,
-                        'pro_img_path' => $valProduct->pro_img_path
+                        'pro_img_id' => $products->pro_img_id,
+                        'pro_img_path' => $products->pro_img_path
                     ];
             } else {
+                $results[$products->pro_flat_id] = array(
+                    'pro_flat_id' => $products->pro_flat_id,
+                    'pro_flat_name' => $products->pro_flat_name,
+                    'pro_flat_price' => $products->pro_flat_price,
+                    'pro_flat_url_key' => $products->pro_flat_url_key,
+                    'pro_flat_cost' => $products->pro_flat_cost,
+                    'cate_trans_id' => $products->cate_trans_id,
+                    'cate_trans_name' => $products->cate_trans_name,
+                    'cate_trans_slug' => $products->cate_trans_slug
 
-                $products['products'][$valProduct->pro_flat_id] = array(
-                    'pro_flat_id' => $valProduct->pro_flat_id,
-                    'pro_flat_name' => $valProduct->pro_flat_name,
-                    'pro_flat_url_key' => $valProduct->pro_flat_url_key,
-                    'pro_flat_price' => $valProduct->pro_flat_price,
-                    'pro_flat_cost' => $valProduct->pro_flat_cost,
-                    'cate_trans_id' => $valProduct->cate_trans_id,
-                    'cate_trans_name' => $valProduct->cate_trans_name,
-                    'cate_trans_slug' => $valProduct->cate_trans_slug
                 );
-                $products['products'][$valProduct->pro_flat_id]['product_images'][] = array(
-                    'pro_img_id' => $valProduct->pro_img_id,
-                    'pro_img_path' => $valProduct->pro_img_path
+                $results[$products->pro_flat_id]['product_images'][] = array(
+                    'pro_img_id' => $products->pro_img_id,
+                    'pro_img_path' => $products->pro_img_path
                 );
             }
         }
-
-        return $products;
+        return $results;
     }
-    //TODO: Please check where of function
+    //TODO: Please check where price > cost, cost > 0
     /**
      * Get product best sell
      */
@@ -921,6 +920,8 @@ class ProductRepository extends Repository
                 );
             }
         }
+
+
 
         return $products;
     }
