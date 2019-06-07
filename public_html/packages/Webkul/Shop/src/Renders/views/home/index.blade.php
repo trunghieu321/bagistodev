@@ -1,6 +1,20 @@
 @extends('shop::layouts.app')
 
 @section('content')
+    <!-- Categorie Menu & Slider Area Start Here -->
+    <div class="main-page-banner pb-50 off-white-bg">
+        <div class="container">
+            <div class="row">
+                @include('shop::layouts.partials.category-main')
+                @include('shop::layouts.partials.slider')
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- Categorie Menu & Slider Area End Here -->
+    @include('shop::layouts.partials.banner-menu')
+
     <!-- Hot Deal Products Start Here -->
     <div class="hot-deal-products off-white-bg pb-sm-50">
         @include('shop::home.host-deal-products')
