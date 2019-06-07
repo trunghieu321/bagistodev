@@ -8,9 +8,13 @@
             @if(!empty($products['categories']))
                 @php $tmp = 0; $i = 0; $len = count($products['categories']); @endphp
                 @foreach($products['categories'] as $keyCategory => $valCategory)
-                    @php if($i == 0) { $active = "active"; } elseif($i > 0) { $active = "";} @endphp
+                    @php
+                        if($i == 0) { $active = "active"; } elseif($i > 0) { $active = "";}
+                        $category_slug = $valCategory['cate_trans_slug'].$tmp;
+                        $category_name = $valCategory['cate_trans_name'];
+                    @endphp
                     <li class="nav-item">
-                        <a class="nav-link {{$active}}" data-toggle="tab" href="#{{$valCategory['cate_trans_slug'].$tmp}}">{{$valCategory['cate_trans_name']}} </a>
+                        <a class="nav-link {{$active}}" data-toggle="tab" href="#{{$category_slug}}">{{$category_name}} </a>
                     </li>
                     @php $i++; $tmp++; @endphp
                 @endforeach
@@ -24,22 +28,36 @@
         @if(!empty($products['categories']))
             @php $tmp = 0; $i = 0; $len = count($products['categories']); @endphp
             @foreach($products['categories'] as $keyCategory => $valCategory)
-                @php if($i == 0) { $active = "active"; $show = "show"; } else if($i > 0) {$active = ""; $show = "";} @endphp
-                <div id="{{$valCategory['cate_trans_slug'].$tmp}}" class="tab-pane fade {{$show}} {{$active}}">
+                @php
+                    if($i == 0){
+                        $active = "active"; $show = "show";
+                    } else if($i > 0) {
+                        $active = ""; $show = "";
+                    }
+                    $category_slug = $valCategory['cate_trans_slug'].$tmp;
+                @endphp
+                <div id="{{ $category_slug }}" class="tab-pane fade {{$show}} {{$active}}">
                     <!-- Arrivals Product Activation Start Here -->
                     <div class="best-seller-pro-active owl-carousel">
                     @if(!empty($valCategory['products']))
                         @foreach($valCategory['products'] as $keyProduct => $valProduct)
+                            @php
+                                $pro_flat_name = $valProduct['pro_flat_name'];
+                                $pro_flat_url_key = $valProduct['pro_flat_url_key'];
+                                $pro_flat_price = number_format($valProduct['pro_flat_price']);
+                                $pro_img_path0 = $valProduct['product_images'][0]['pro_img_path'];
+                                $pro_img_path1 = $valProduct['product_images'][1]['pro_img_path'];
+                            @endphp
                             <!-- Single Product Start -->
                                 <div class="single-product">
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
-                                        <a href="product.html">
+                                        <a href="{{ route('shop.products.index', $pro_flat_url_key) }}">
                                             @if(!empty($valProduct['product_images'][0]))
-                                                <img class="primary-img" src="{{asset("storage/".$valProduct['product_images'][0]['pro_img_path'])}}" alt="{{$valProduct['pro_flat_name']}}">
+                                                <img class="primary-img" src="{{asset("storage/".$pro_img_path0)}}" alt="{{$pro_flat_name}}">
                                             @endif
                                             @if(!empty($valProduct['product_images'][1]))
-                                                <img class="secondary-img" src="{{asset("storage/".$valProduct['product_images'][1]['pro_img_path'])}}" alt="{{$valProduct['pro_flat_name']}}">
+                                                <img class="secondary-img" src="{{asset("storage/".$pro_img_path1)}}" alt="{{$pro_flat_name}}">
                                             @endif
                                         </a>
                                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -48,8 +66,14 @@
                                     <!-- Product Content Start -->
                                     <div class="pro-content">
                                         <div class="pro-info">
-                                            <h4><a href="product.html">{{$valProduct['pro_flat_name']}}</a></h4>
-                                            <p><span class="price">{{number_format($valProduct['pro_flat_price'])}}</span></p>
+                                            <h4>
+                                                <a href="{{ route('shop.products.index', $pro_flat_url_key) }}">
+                                                    {{ $valProduct['pro_flat_name'] }}
+                                                </a>
+                                            </h4>
+                                            @if($pro_flat_price > 0)
+                                            <p><span class="price">{{ $pro_flat_price }}</span></p>
+                                            @endif
                                         </div>
                                         <div class="pro-actions">
                                             <div class="actions-primary">

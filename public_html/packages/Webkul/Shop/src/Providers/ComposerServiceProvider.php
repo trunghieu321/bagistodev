@@ -29,18 +29,28 @@ class ComposerServiceProvider extends ServiceProvider
         );
 
         View::composer(
-            ['shop::home.new-arrivals'],
+            ['shop::home.new-products'],
             'Webkul\Shop\Http\ViewComposers\NewProductListComposer'
         );
 
         View::composer(
-            ['shop::home.best-seller'],
+            ['shop::home.host-deal-products'],
+            'Webkul\Shop\Http\ViewComposers\DealProductListComposer'
+        );
+
+        View::composer(
+            ['shop::home.best-seller-products'],
             'Webkul\Shop\Http\ViewComposers\BestSellProductListComposer'
         );
 
         View::composer(
             ['shop::home.featured-products'],
             'Webkul\Shop\Http\ViewComposers\FeaturedProductListComposer'
+        );
+
+        View::composer(
+            ['shop::home.you-like-products'],
+            'Webkul\Shop\Http\ViewComposers\LikeProductListComposer'
         );
     }
 }
