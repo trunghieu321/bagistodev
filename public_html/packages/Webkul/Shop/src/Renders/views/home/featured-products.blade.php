@@ -45,12 +45,13 @@
                                 </a>
                             </h4>
                             <p>
-                                @if($pro_flat_price > 0)
-                                    <span class="price">{{$pro_flat_price}} đ</span>
-                                @endif
-                                @if($pro_flat_cost > 0)
-                                    <del class="prev-price">{{$pro_flat_cost}} đ</del>
-                                @endif
+                            @if($pro_flat_cost > 0)
+                                <span class="price">{{$pro_flat_cost}} đ</span>
+
+                                <del class="prev-price">{{$pro_flat_price}} đ</del>
+                            @else
+                                <span class="price">{{$pro_flat_price}} đ</span>
+                            @endif
                             </p>
                             @if($discount > 0)
                                 <div class="label-product l_sale">

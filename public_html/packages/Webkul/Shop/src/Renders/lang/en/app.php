@@ -28,6 +28,10 @@ return [
     ],
     'menu' => [
         'shop-by-categories' => 'Shop by Categories'
+    ],
+    'products' =>[
+        'in-stock' => 'In stock',
+        'out-of-stock' => 'Out of stock'
     ]
 
 ];

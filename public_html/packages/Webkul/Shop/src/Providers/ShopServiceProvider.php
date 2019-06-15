@@ -32,7 +32,7 @@ class ShopServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../Renders/lang', 'shop');
 
         $this->publishes([
-            __DIR__ . '/../../publishable/assets' => public_path('themes/default/assets'),
+            __DIR__ . '/../../publishable/assets' => public_path('themes/truemart/assets'),
         ], 'public');
 
         $this->loadViewsFrom(__DIR__ . '/../Renders/views', 'shop');

@@ -1,14 +1,21 @@
 @extends('shop::layouts.app')
 
 @section('content')
+    @inject ('configurableOptionHelper', 'Webkul\Product\Helpers\ConfigurableOption')
+    @php
+        $pro_flat_name = $product['name'];
+        $pro_flat_url_key = $product['url_key'];
+        $config = $configurableOptionHelper->getConfigurationConfig($product);
+    @endphp
+
     <!-- Breadcrumb Start -->
     <div class="breadcrumb-area">
         <div class="container">
             <div class="breadcrumb">
                 <ul class="d-flex align-items-center">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li class="active"><a href="product.html">Products</a></li>
+                    <li><a href="{{route('shop.home.index')}}">Home</a></li>
+                    <li><a>Product</a></li>
+                    <li class="active"><a href="{{route('shop.products.index', $pro_flat_url_key)}}">{{ $pro_flat_name }}</a></li>
                 </ul>
             </div>
         </div>
@@ -18,114 +25,30 @@
     <!-- Product Thumbnail Start -->
     <div class="main-product-thumbnail ptb-sm-60">
         <div class="container">
-            <div class="thumb-bg">
-                <div class="row">
-                    <!-- Main Thumbnail Image Start -->
-                    <div class="col-lg-5 mb-all-40">
-                        <!-- Thumbnail Large Image start -->
-                        <div class="tab-content">
-                            <div id="thumb1" class="tab-pane fade show active">
-                                <a data-fancybox="images" href="img/products/35.jpg"><img src="img/products/35.jpg" alt="product-view"></a>
-                            </div>
-                            <div id="thumb2" class="tab-pane fade">
-                                <a data-fancybox="images" href="img/products/13.jpg"><img src="img/products/13.jpg" alt="product-view"></a>
-                            </div>
-                            <div id="thumb3" class="tab-pane fade">
-                                <a data-fancybox="images" href="img/products/15.jpg"><img src="img/products/15.jpg" alt="product-view"></a>
-                            </div>
-                            <div id="thumb4" class="tab-pane fade">
-                                <a data-fancybox="images" href="img/products/4.jpg"><img src="img/products/4.jpg" alt="product-view"></a>
-                            </div>
-                            <div id="thumb5" class="tab-pane fade">
-                                <a data-fancybox="images" href="img/products/5.jpg"><img src="img/products/5.jpg" alt="product-view"></a>
+            <product-view>
+                <div class="thumb-bg">
+                    <div class="row">
+                        <!-- Main Thumbnail Image Start -->
+                        @include('shop::products.view.gallery', ['product', $product])
+                        <!-- Main Thumbnail Image End -->
+                        <!-- Thumbnail Description Start -->
+                        <div class="col-lg-7">
+                            <div class="thubnail-desc fix">
+                                <h3 class="product-header">{{$pro_flat_name}}</h3>
+                                @include('shop::products.view.rating', ['product' => $product])
+                                @include('shop::products.view.price', ['product' => $product])
+                                @include('shop::products.view.short-desc', ['product' => $product])
+                                @include('shop::products.view.option-size', ['product' => $product])
+                                @include('shop::products.view.pro-actions', ['product', $product])
+                                @include('shop::products.view.in-stock', ['product', $product])
+                                @include('shop::products.view.social')
                             </div>
                         </div>
-                        <!-- Thumbnail Large Image End -->
-                        <!-- Thumbnail Image End -->
-                        <div class="product-thumbnail mt-15">
-                            <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
-                                <a class="active" data-toggle="tab" href="#thumb1"><img src="img/products/35.jpg" alt="product-thumbnail"></a>
-                                <a data-toggle="tab" href="#thumb2"><img src="img/products/13.jpg" alt="product-thumbnail"></a>
-                                <a data-toggle="tab" href="#thumb3"><img src="img/products/15.jpg" alt="product-thumbnail"></a>
-                                <a data-toggle="tab" href="#thumb4"><img src="img/products/4.jpg" alt="product-thumbnail"></a>
-                                <a data-toggle="tab" href="#thumb5"><img src="img/products/5.jpg" alt="product-thumbnail"></a>
-                            </div>
-                        </div>
-                        <!-- Thumbnail image end -->
+                        <!-- Thumbnail Description End -->
                     </div>
-                    <!-- Main Thumbnail Image End -->
-                    <!-- Thumbnail Description Start -->
-                    <div class="col-lg-7">
-                        <div class="thubnail-desc fix">
-                            <h3 class="product-header">Faded Short Sleeves T-shirt</h3>
-                            <div class="rating-summary fix mtb-10">
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="rating-feedback">
-                                    <a href="#">(1 review)</a>
-                                    <a href="#">add to your review</a>
-                                </div>
-                            </div>
-                            <div class="pro-price mtb-30">
-                                <p class="d-flex align-items-center"><span class="prev-price">16.51</span><span class="price">$15.19</span><span class="saving-price">save 8%</span></p>
-                            </div>
-                            <p class="mb-20 pro-desc-details">Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>
-                            <div class="product-size mb-20 clearfix">
-                                <label>Size</label>
-                                <select class="">
-                                    <option>S</option>
-                                    <option>M</option>
-                                    <option>L</option>
-                                </select>
-                            </div>
-                            <div class="color clearfix mb-20">
-                                <label>color</label>
-                                <ul class="color-list">
-                                    <li>
-                                        <a class="orange active" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="paste" href="#"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="box-quantity d-flex hot-product2">
-                                <form action="#">
-                                    <input class="quantity mr-15" type="number" min="1" value="1">
-                                </form>
-                                <div class="pro-actions">
-                                    <div class="actions-primary">
-                                        <a href="cart.html" title="" data-original-title="Add to Cart"> + Add To Cart</a>
-                                    </div>
-                                    <div class="actions-secondary">
-                                        <a href="compare.html" title="" data-original-title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                        <a href="wishlist.html" title="" data-original-title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pro-ref mt-20">
-                                <p><span class="in-stock"><i class="ion-checkmark-round"></i> IN STOCK</span></p>
-                            </div>
-                            <div class="socila-sharing mt-25">
-                                <ul class="d-flex">
-                                    <li>share</li>
-                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus-official" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Thumbnail Description End -->
+                    <!-- Row End -->
                 </div>
-                <!-- Row End -->
-            </div>
+            </product-view>
         </div>
         <!-- Container End -->
     </div>
@@ -141,111 +64,8 @@
                     </ul>
                     <!-- Product Thumbnail Tab Content Start -->
                     <div class="tab-content thumb-content border-default">
-                        <div id="dtail" class="tab-pane fade show active">
-                            <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
-                        </div>
-                        <div id="review" class="tab-pane fade">
-                            <!-- Reviews Start -->
-                            <div class="review border-default universal-padding">
-                                <div class="group-title">
-                                    <h2>customer review</h2>
-                                </div>
-                                <h4 class="review-mini-title">Truemart</h4>
-                                <ul class="review-list">
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Quality</span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <label>Truemart</label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>price</span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <label>Review by <a href="https://themeforest.net/user/hastech">Truemart</a></label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>value</span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <label>Posted on 7/20/18</label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                </ul>
-                            </div>
-                            <!-- Reviews End -->
-                            <!-- Reviews Start -->
-                            <div class="review border-default universal-padding mt-30">
-                                <h2 class="review-title mb-30">You're reviewing: <br><span>Faded Short Sleeves T-shirt</span></h2>
-                                <p class="review-mini-title">your rating</p>
-                                <ul class="review-list">
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Quality</span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>price</span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>value</span>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                </ul>
-                                <!-- Reviews Field Start -->
-                                <div class="riview-field mt-40">
-                                    <form autocomplete="off" action="#">
-                                        <div class="form-group">
-                                            <label class="req" for="sure-name">Nickname</label>
-                                            <input type="text" class="form-control" id="sure-name" required="required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="req" for="subject">Summary</label>
-                                            <input type="text" class="form-control" id="subject" required="required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="req" for="comments">Review</label>
-                                            <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
-                                        </div>
-                                        <button type="submit" class="customer-btn">Submit Review</button>
-                                    </form>
-                                </div>
-                                <!-- Reviews Field Start -->
-                            </div>
-                            <!-- Reviews End -->
-                        </div>
+                        @include('shop::products.view.desc', ['product', $product])
+                        @include('shop::products.view.review', ['product' => $product])
                     </div>
                     <!-- Product Thumbnail Tab Content End -->
                 </div>
@@ -255,269 +75,7 @@
         <!-- Container End -->
     </div>
     <!-- Product Thumbnail Description End -->
-    <!-- Realted Products Start Here -->
-    <div class="hot-deal-products off-white-bg pt-100 pb-90 pt-sm-60 pb-sm-50">
-        <div class="container">
-            <!-- Product Title Start -->
-            <div class="post-title pb-30">
-                <h2>Realted Products</h2>
-            </div>
-            <!-- Product Title End -->
-            <!-- Hot Deal Product Activation Start -->
-            <div class="hot-deal-active owl-carousel">
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/17.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/18.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Eames and Vortex Side</a></h4>
-                            <p><span class="price">$160.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                    <span class="sticker-new">new</span>
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/19.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/20.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Work Lamp Silver Proin</a></h4>
-                            <p><span class="price">$320.45</span> <del class="prev-price">$330.50</del></p>
-                            <div class="label-product l_sale">15<span class="symbol-percent">%</span></div>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/21.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/22.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Gpoly and Bark Eames Style</a></h4>
-                            <p><span class="price">$150.30</span> <del class="prev-price">$105.50</del></p>
-                            <div class="label-product l_sale">22<span class="symbol-percent">%</span></div>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/22.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/23.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                            <p><span class="price">$90.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                    <span class="sticker-new">new</span>
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/8.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/9.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Eames and Bark  Style</a></h4>
-                            <p><span class="price">$90.45</span><del class="prev-price">$100.50</del></p>
-                            <div class="label-product l_sale">20<span class="symbol-percent">%</span></div>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/15.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/16.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Bark Vortex Side Eames</a></h4>
-                            <p><span class="price">$84.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/13.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/14.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                            <p><span class="price">$95.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                </div>
-                <!-- Single Product End -->
-                <!-- Single Product Start -->
-                <div class="single-product">
-                    <!-- Product Image Start -->
-                    <div class="pro-img">
-                        <a href="product.html">
-                            <img class="primary-img" src="img/products/1.jpg" alt="single-product">
-                            <img class="secondary-img" src="img/products/7.jpg" alt="single-product">
-                        </a>
-                        <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                    <!-- Product Image End -->
-                    <!-- Product Content Start -->
-                    <div class="pro-content">
-                        <div class="pro-info">
-                            <h4><a href="product.html">Poly and Bark Vortex Side</a></h4>
-                            <p><span class="price">$84.45</span></p>
-                        </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
-                            </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Product Content End -->
-                </div>
-                <!-- Single Product End -->
-            </div>
-            <!-- Hot Deal Product Active End -->
-
-        </div>
-        <!-- Container End -->
-    </div>
-    <!-- Realated Products End Here -->
-
+    @include('shop::products.view.related-products', ['product' => $product])
 @endsection
 
 
@@ -558,6 +116,7 @@
 @push('footer_js')
     <!-- jquery 3.2.1 -->
     <script src="{{asset("vendor/truemart")}}/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="{{asset("vendor/truemart")}}/js/vendor/vue.js"></script>
     <!-- Countdown js -->
     <script src="{{asset("vendor/truemart")}}/js/jquery.countdown.min.js"></script>
     <!-- Mobile menu js -->
@@ -582,4 +141,257 @@
     <script src="{{asset("vendor/truemart")}}/js/plugins.js"></script>
     <!-- Main activaion js -->
     <script src="{{asset("vendor/truemart")}}/js/main.js"></script>
+    <script>
+
+        Vue.component('product-view', {
+
+            template: '#product-view-template',
+
+            inject: ['$validator'],
+
+
+            data: () => ({
+                config: @json($config),
+
+                childAttributes: [],
+
+                selectedProductId: '',
+
+                simpleProduct: null,
+
+                galleryImages: []
+            }),
+
+            created () {
+                this.galleryImages = galleryImages.slice(0);
+                console.log(this.galleryImages);
+
+                var config = @json($config);
+                alert(config);
+
+                var childAttributes = this.childAttributes,
+                    attributes = config.attributes.slice(),
+                    index = attributes.length,
+                    attribute;
+
+                while (index--) {
+                    attribute = attributes[index];
+
+                    attribute.options = [];
+
+                    if (index) {
+                        attribute.disabled = true;
+                    } else {
+                        this.fillSelect(attribute);
+                    }
+
+                    attribute = Object.assign(attribute, {
+                        childAttributes: childAttributes.slice(),
+                        prevAttribute: attributes[index - 1],
+                        nextAttribute: attributes[index + 1]
+                    });
+
+                    childAttributes.unshift(attribute);
+                }
+            },
+
+            methods: {
+                configure (attribute, value) {
+                    this.simpleProduct = this.getSelectedProductId(attribute, value);
+
+                    if (value) {
+                        attribute.selectedIndex = this.getSelectedIndex(attribute, value);
+
+                        if (attribute.nextAttribute) {
+                            attribute.nextAttribute.disabled = false;
+
+                            this.fillSelect(attribute.nextAttribute);
+
+                            this.resetChildren(attribute.nextAttribute);
+                        } else {
+                            this.selectedProductId = attribute.options[attribute.selectedIndex].allowedProducts[0];
+                        }
+
+                        //buy now anchor href changer with options
+                        var buyNowLink = $('.btn.buynow').attr('data-href');
+
+                        if (this.selectedProductId != '') {
+                            var splitted = buyNowLink.split("/");
+
+                            var lastItem = splitted.pop();
+
+                            lastItem = this.selectedProductId;
+
+                            var joined = splitted.join('/');
+
+                            var newBuyNowUrl = joined + '/' + lastItem;
+
+                            $('.btn.buynow').attr('data-href', newBuyNowUrl);
+                        }
+                    } else {
+                        attribute.selectedIndex = 0;
+
+                        this.resetChildren(attribute);
+
+                        this.clearSelect(attribute.nextAttribute)
+                    }
+
+                    this.reloadPrice();
+                    this.changeProductImages();
+                },
+
+                getSelectedIndex (attribute, value) {
+                    var selectedIndex = 0;
+
+                    attribute.options.forEach(function(option, index) {
+                        if (option.id == value) {
+                            selectedIndex = index;
+                        }
+                    })
+
+                    return selectedIndex;
+                },
+
+                getSelectedProductId (attribute, value) {
+                    var options = attribute.options,
+                        matchedOptions;
+
+                    matchedOptions = options.filter(function (option) {
+                        return option.id == value;
+                    });
+
+                    if (matchedOptions[0] != undefined && matchedOptions[0].allowedProducts != undefined) {
+                        return matchedOptions[0].allowedProducts[0];
+                    }
+
+                    return undefined;
+                },
+
+                fillSelect (attribute) {
+                    var options = this.getAttributeOptions(attribute.id),
+                        prevOption,
+                        index = 1,
+                        allowedProducts,
+                        i,
+                        j;
+
+                    this.clearSelect(attribute)
+
+                    attribute.options = [{'id': '', 'label': this.config.chooseText, 'products': []}];
+
+                    if (attribute.prevAttribute) {
+                        prevOption = attribute.prevAttribute.options[attribute.prevAttribute.selectedIndex];
+                    }
+
+                    if (options) {
+                        for (i = 0; i < options.length; i++) {
+                            allowedProducts = [];
+
+                            if (prevOption) {
+                                for (j = 0; j < options[i].products.length; j++) {
+                                    if (prevOption.products && prevOption.products.indexOf(options[i].products[j]) > -1) {
+                                        allowedProducts.push(options[i].products[j]);
+                                    }
+                                }
+                            } else {
+                                allowedProducts = options[i].products.slice(0);
+                            }
+
+                            if (allowedProducts.length > 0) {
+                                options[i].allowedProducts = allowedProducts;
+
+                                attribute.options[index] = options[i];
+
+                                index++;
+                            }
+                        }
+                    }
+                },
+
+                resetChildren (attribute) {
+                    if (attribute.childAttributes) {
+                        attribute.childAttributes.forEach(function (set) {
+                            set.selectedIndex = 0;
+                            set.disabled = true;
+                        });
+                    }
+                },
+
+                clearSelect: function (attribute) {
+                    if (! attribute)
+                        return;
+
+                    if (! attribute.swatch_type || attribute.swatch_type == '' || attribute.swatch_type == 'dropdown') {
+                        var element = document.getElementById("attribute_" + attribute.id);
+
+                        if (element) {
+                            element.selectedIndex = "0";
+                        }
+                    } else {
+                        var elements = document.getElementsByName('super_attribute[' + attribute.id + ']');
+
+                        var this_this = this;
+
+                        elements.forEach(function(element) {
+                            element.checked = false;
+                        })
+                    }
+                },
+
+                getAttributeOptions (attributeId) {
+                    var this_this = this,
+                        options;
+
+                    this.config.attributes.forEach(function(attribute, index) {
+                        if (attribute.id == attributeId) {
+                            options = attribute.options;
+                        }
+                    })
+
+                    return options;
+                },
+
+                reloadPrice () {
+                    var selectedOptionCount = 0;
+
+                    this.childAttributes.forEach(function(attribute) {
+                        if (attribute.selectedIndex) {
+                            selectedOptionCount++;
+                        }
+                    });
+
+                    var priceLabelElement = document.querySelector('.price-label');
+                    var priceElement = document.querySelector('.final-price');
+
+                    if (this.childAttributes.length == selectedOptionCount) {
+                        priceLabelElement.style.display = 'none';
+
+                        priceElement.innerHTML = this.config.variant_prices[this.simpleProduct].final_price.formated_price;
+
+                        eventBus.$emit('configurable-variant-selected-event', this.simpleProduct)
+                    } else {
+                        priceLabelElement.style.display = 'inline-block';
+
+                        priceElement.innerHTML = this.config.regular_price.formated_price;
+
+                        eventBus.$emit('configurable-variant-selected-event', 0)
+                    }
+                },
+
+                changeProductImages () {
+                    galleryImages.splice(0, galleryImages.length)
+
+                    this.galleryImages.forEach(function(image) {
+                        galleryImages.push(image)
+                    });
+
+                    if (this.simpleProduct) {
+                        this.config.variant_images[this.simpleProduct].forEach(function(image) {
+                            galleryImages.unshift(image)
+                        });
+                    }
+                },
+            }
+        });
+    </script>
 @endpush

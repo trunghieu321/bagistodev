@@ -68,12 +68,13 @@
                                                 <div class="pro-info">
                                                     <h4><a href="{{route('shop.products.index', $pro_flat_url_key0)}}">{{$pro_flat_name0}}</a></h4>
                                                     <p>
-                                                        @if($pro_flat_price0 > 0)
-                                                            <span class="price">{{$pro_flat_price0}}</span>
-                                                        @endif
-                                                        @if($pro_flat_cost0 > 0))
-                                                        <del class="prev-price">{{$pro_flat_cost0}}</del>
-                                                        @endif
+                                                    @if($pro_flat_cost0 > 0)
+                                                        <span class="price">{{$pro_flat_cost0}} đ</span>
+
+                                                        <del class="prev-price">{{$pro_flat_price0}} đ</del>
+                                                    @else
+                                                        <span class="price">{{$pro_flat_price0}} đ</span>
+                                                    @endif
                                                     </p>
                                                     @if($discount0 > 0)
                                                         <div class="label-product l_sale">{{$discount0}}<span class="symbol-percent">%</span></div>
@@ -126,12 +127,13 @@
                                                 <div class="pro-info">
                                                     <h4><a href="{{route('shop.products.index', $pro_flat_url_key1)}}">{{$pro_flat_name1}}</a></h4>
                                                     <p>
-                                                        @if($pro_flat_price1 > 0)
-                                                        <span class="price">{{$pro_flat_price1}}</span>
-                                                        @endif
-                                                        @if($pro_flat_cost1 > 0))
-                                                        <del class="prev-price">{{$pro_flat_cost1}}</del>
-                                                        @endif
+                                                    @if($pro_flat_cost1 > 0)
+                                                        <span class="price">{{$pro_flat_cost1}} đ</span>
+
+                                                        <del class="prev-price">{{$pro_flat_price1}} đ</del>
+                                                    @else
+                                                        <span class="price">{{$pro_flat_price1}} đ</span>
+                                                    @endif
                                                     </p>
                                                     @if($discount1 > 0)
                                                     <div class="label-product l_sale">{{$discount1}}<span class="symbol-percent">%</span></div>
