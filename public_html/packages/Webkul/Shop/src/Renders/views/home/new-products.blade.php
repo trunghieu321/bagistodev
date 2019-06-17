@@ -41,11 +41,11 @@
                                     @php
                                         $pro_flat_name0 = $valCategory['products'.$tmp][0]['pro_flat_name'];
                                         $pro_flat_url_key0 = $valCategory['products'.$tmp][0]['pro_flat_url_key'];
-                                        $pro_flat_price0 = number_format($valCategory['products'.$tmp][0]['pro_flat_price']);
-                                        $pro_flat_cost0 = number_format($valCategory['products'.$tmp][0]['pro_flat_cost']);
+                                        $pro_flat_price0 = $valCategory['products'.$tmp][0]['pro_flat_price'];
+                                        $pro_flat_cost0 = $valCategory['products'.$tmp][0]['pro_flat_cost'];
                                         $discount0 = 0;
-                                        if($pro_flat_cost0 > 0) {
-                                            $discount0 = ($pro_flat_cost0 - $pro_flat_price0)/$pro_flat_cost0*100;
+                                        if(!empty($pro_flat_cost0)) {
+                                            $discount0 = (($pro_flat_price0 - $pro_flat_cost0)/$pro_flat_cost0)*100;
                                         }
                                     @endphp
                                     <!-- Single Product Start -->
@@ -68,16 +68,16 @@
                                                 <div class="pro-info">
                                                     <h4><a href="{{route('shop.products.index', $pro_flat_url_key0)}}">{{$pro_flat_name0}}</a></h4>
                                                     <p>
-                                                    @if($pro_flat_cost0 > 0)
-                                                        <span class="price">{{$pro_flat_cost0}} đ</span>
-
-                                                        <del class="prev-price">{{$pro_flat_price0}} đ</del>
-                                                    @else
-                                                        <span class="price">{{$pro_flat_price0}} đ</span>
-                                                    @endif
+                                                        @if($pro_flat_cost0 > 0)
+                                                        <del class="prev-price">{{ number_format($pro_flat_price0) }}</del>
+                                                        <span class="price">{{ number_format($pro_flat_cost0) }}</span>
+                                                        @endif
+                                                        @if($pro_flat_cost0 == 0)
+                                                        <span class="price">{{ number_format($pro_flat_price0) }}</span>
+                                                        @endif
                                                     </p>
                                                     @if($discount0 > 0)
-                                                        <div class="label-product l_sale">{{$discount0}}<span class="symbol-percent">%</span></div>
+                                                        <div class="label-product l_sale">{{round($discount0)}}<span class="symbol-percent">%</span></div>
                                                     @endif
                                                 </div>
                                                 <div class="pro-actions">
@@ -100,11 +100,11 @@
                                     @php
                                         $pro_flat_name1 = $valCategory['products'.$tmp][1]['pro_flat_name'];
                                         $pro_flat_url_key1 = $valCategory['products'.$tmp][1]['pro_flat_url_key'];
-                                        $pro_flat_price1 = number_format($valCategory['products'.$tmp][1]['pro_flat_price']);
-                                        $pro_flat_cost1 = number_format($valCategory['products'.$tmp][1]['pro_flat_cost']);
+                                        $pro_flat_price1 = $valCategory['products'.$tmp][1]['pro_flat_price'];
+                                        $pro_flat_cost1 = $valCategory['products'.$tmp][1]['pro_flat_cost'];
                                         $discount1 = 0;
                                         if($pro_flat_cost1 > 0) {
-                                            $discount1 = ($pro_flat_cost1 - $pro_flat_price1)/$pro_flat_cost1*100;
+                                            $discount1 = (($pro_flat_price1 - $pro_flat_cost1)/$pro_flat_price1)*100;
                                         }
                                     @endphp
                                     <!-- Single Product Start -->
@@ -127,16 +127,19 @@
                                                 <div class="pro-info">
                                                     <h4><a href="{{route('shop.products.index', $pro_flat_url_key1)}}">{{$pro_flat_name1}}</a></h4>
                                                     <p>
-                                                    @if($pro_flat_cost1 > 0)
-                                                        <span class="price">{{$pro_flat_cost1}} đ</span>
-
-                                                        <del class="prev-price">{{$pro_flat_price1}} đ</del>
-                                                    @else
-                                                        <span class="price">{{$pro_flat_price1}} đ</span>
-                                                    @endif
+                                                        @if($pro_flat_cost1 > 0)
+                                                        <del class="prev-price">{{ number_format($pro_flat_price1) }}</del>
+                                                        <span class="price">{{ number_format($pro_flat_cost1) }}</span>
+                                                        @endif
+                                                        @if($pro_flat_cost1 == 0)
+                                                        <span class="price">{{ number_format($pro_flat_price1) }}</span>
+                                                        @endif
                                                     </p>
                                                     @if($discount1 > 0)
-                                                    <div class="label-product l_sale">{{$discount1}}<span class="symbol-percent">%</span></div>
+                                                    <div class="label-product l_sale">
+                                                        {{round($discount1)}}
+                                                        <span class="symbol-percent">%</span>
+                                                    </div>
                                                     @endif
                                                 </div>
                                                 <div class="pro-actions">

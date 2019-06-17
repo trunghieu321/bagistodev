@@ -672,7 +672,9 @@ class ProductRepository extends Repository
                 );
             }
         }  
-        
+        if(!isset($products['products'])) {
+            return [];
+        }
         foreach ($products['products'] as $product) {
             if(isset($categories['categories'][$product['cate_trans_id']])) {
                 $categories['categories'][$product['cate_trans_id']]['products'][] = $product;
@@ -753,6 +755,9 @@ class ProductRepository extends Repository
             }
         }    
 
+        if(!isset($products['products'])) {
+            return [];
+        }
         $tmp = 0;
         foreach ($products['products'] as $product) {
             if(isset($categories['categories'][$product['cate_trans_id']])) {
@@ -839,7 +844,9 @@ class ProductRepository extends Repository
                 );
             }
         }
-
+        if(!isset($products['products'])) {
+            return [];
+        }
         $tmp = 0;
         foreach ($products['products'] as $product) {
             if(isset($categories['categories'][$product['cate_trans_id']])) {

@@ -44,10 +44,19 @@
                             @php
                                 $pro_flat_name = $valProduct['pro_flat_name'];
                                 $pro_flat_url_key = $valProduct['pro_flat_url_key'];
-                                $pro_flat_price = number_format($valProduct['pro_flat_price']);
-                                $pro_flat_cost = number_format($valProduct['pro_flat_cost']);
-                                $pro_img_path0 = $valProduct['product_images'][0]['pro_img_path'];
-                                $pro_img_path1 = $valProduct['product_images'][1]['pro_img_path'];
+                                $pro_flat_price = $valProduct['pro_flat_price'];
+                                $pro_flat_cost = $valProduct['pro_flat_cost'];
+                                if(isset($valProduct['product_images'][0])) {
+                                    $pro_img_path0 = $valProduct['product_images'][0]['pro_img_path'];
+                                }
+
+                                if(isset($valProduct['product_images'][1])) {
+                                    $pro_img_path1 = $valProduct['product_images'][1]['pro_img_path'];
+                                }
+                                $discount = 0;
+                                if($pro_flat_cost > 0) {
+                                    $discount = (($pro_flat_price - $pro_flat_cost)/$pro_flat_price)*100;
+                                }
                             @endphp
                             <!-- Single Product Start -->
                                 <div class="single-product">
@@ -73,14 +82,20 @@
                                                 </a>
                                             </h4>
                                             <p>
-                                            @if($pro_flat_cost > 0)
-                                                <span class="price">{{$pro_flat_cost}} đ</span>
-
-                                                <del class="prev-price">{{$pro_flat_price}} đ</del>
-                                            @else
-                                                <span class="price">{{$pro_flat_price}} đ</span>
-                                            @endif
+                                                @if($pro_flat_cost > 0)
+                                                <del class="prev-price">{{ number_format($pro_flat_price) }}</del>
+                                                <span class="price">{{ number_format($pro_flat_cost) }}</span>
+                                                @endif
+                                                @if($pro_flat_cost == 0)
+                                                <span class="price">{{ number_format($pro_flat_price) }}</span>
+                                                @endif
                                             </p>
+                                            @if($discount > 0)
+                                            <div class="label-product l_sale">
+                                                {{ round($discount) }}
+                                                <span class="symbol-percent">%</span>
+                                            </div>
+                                            @endif
                                         </div>
                                         <div class="pro-actions">
                                             <div class="actions-primary">
