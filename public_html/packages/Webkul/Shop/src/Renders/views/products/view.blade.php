@@ -4,17 +4,9 @@
     @inject ('configurableOptionHelper', 'Webkul\Product\Helpers\ConfigurableOption')
     @inject ('productImageHelper', 'Webkul\Product\Helpers\ProductImage')
     @php
-        $pro_flat_name = $product['name'];
         $pro_flat_url_key = $product['url_key'];
-        $pro_flat_price = $product['price'];
-        $pro_flat_cost = $product['cost'];
-        $pro_flat_type = $product['type'];
         $pro_flat_short_desc = $product['short_description'];
         $pro_flat_description = $product['description'];
-        $discount = 0;
-        if($pro_flat_cost > 0) {
-            $discount = (($pro_flat_price - $pro_flat_cost)/$pro_flat_price)*100;
-        }
         $config = $configurableOptionHelper->getConfigurationConfig($product);
         $images = $productImageHelper->getGalleryImages($product);
     @endphp
@@ -25,7 +17,7 @@
                 <ul class="d-flex align-items-center">
                     <li><a href="{{route('shop.home.index')}}">Home</a></li>
                     <li><a>Product</a></li>
-                    <li class="active"><a href="{{route('shop.products.index', $pro_flat_url_key)}}">{{ $pro_flat_name }}</a></li>
+                    <li class="active"><a href="{{route('shop.products.index', $pro_flat_url_key)}}"></a></li>
                 </ul>
             </div>
         </div>
@@ -44,8 +36,14 @@
                         <!-- Thumbnail Description Start -->
                         <div class="col-lg-7">
                             <div class="thubnail-desc fix">
-                                <h3 class="product-header">@{{ product.name }}</h3>
+                                <h4 class="product-header">@{{ product.name }}</h4>
                                 @include('shop::products.view.rating', ['product' => $product])
+                                <ul class="list-unstyled">
+                                    <li>
+                                        Brands: <a><span class="ex-text">Boconi</span></a>
+                                    </li>
+                                    <li>SKU: <span class="ex-text">@{{product.sku}}</span></li>
+					            </ul>
                                 @include('shop::products.view.price', ['product' => $product])
                                 @include('shop::products.view.short-desc', ['product' => $product])
                                 @include('shop::products.view.choose-option', ['product' => $product])
@@ -90,12 +88,7 @@
 
 @push('footer_js')
     <script type="text/javascript">
-        var name = @json($pro_flat_name);
-        var price = @json($pro_flat_price);
-        var cost = @json($pro_flat_cost);
-        var discount = @json($discount);
         var config = @json($config);
         var galleryImages = @json($images);
-        console.log(config);
     </script>
 @endpush

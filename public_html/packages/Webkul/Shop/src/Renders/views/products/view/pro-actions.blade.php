@@ -1,4 +1,4 @@
-<div class="box-quantity d-flex hot-product2">
+<div class="box-quantity d-flex hot-product2 mt-20">
     <form action="#">
         <input class="quantity mr-15" type="number" min="1" value="1">
     </form>

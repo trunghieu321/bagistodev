@@ -2545,7 +2545,7 @@ li.megamenu-img a {
 }
 
 .color-list li a {
-    border: 2px solid transparent;
+    border: 2px solid #6c757d;
     height: 22px;
     margin: 0 8px 10px 0;
     -webkit-transition: all 0.3s ease 0s;
@@ -2556,7 +2556,7 @@ li.megamenu-img a {
 
 .color-list li a.active,
 .color-list li a:hover {
-    border-color: #333333;
+    border-color: #e62e04;
 }
 
 .color-list li a.orange {
@@ -4540,4 +4540,22 @@ a.shipping-calculator-button:hover {
   text-decoration: none;
   top: 6px;
   transition: all 0.3s ease-in 0s;
+}
+ul.list-unstyled {
+    color: #363636;
+    clear: both;
+    line-height: 36px;
+    font-size: 13px;
+    text-transform: capitalize;
+}
+ul.list-unstyled span.ex-text {
+    color: #e62e04;
+    margin-left: 5px;
+    font-weight: 400;
+}
+div#available_options {
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid #e1e1e1;
+    padding: 0 20px;
 }
