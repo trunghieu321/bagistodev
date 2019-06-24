@@ -60,6 +60,22 @@
                 var productId = $(el).attr('attr-id-product');
                 
                 this.getProduct(productId);
+                this.selectedProductId = productId;
+            },
+            addCart () {
+                if (!event)
+                    return;
+                var productId = this.selectedProductId;
+                var quantity = $('input[name="quantity"]').val();
+                let token = document.head.querySelector('meta[name="csrf-token"]').content;
+
+                axios.post("../checkout/cart/add/"+productId, {'quantity' : quantity, '_token': token})
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(e => {
+                        this.errors.push(e)
+                    })
             }
         }
     }

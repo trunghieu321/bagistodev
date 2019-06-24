@@ -9,9 +9,7 @@
                 @{{ attr.label }}
             </label>
             <select v-if="attr.code == 'size'">
-                <option v-for="(size, key) in attr.options">
-                    
-                </option>
+                <option v-for="(size, key) in attr.options"></option>
             </select>
 
         </div>

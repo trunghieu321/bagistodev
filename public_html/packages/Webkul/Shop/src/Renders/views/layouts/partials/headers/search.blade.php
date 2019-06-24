@@ -1,5 +1,5 @@
 <div class="categorie-search-box">
-    <form action="#">
+    <form role="search" action="{{ route('shop.search.index') }}" method="GET">
         <div class="form-group">
             <select class="bootstrap-select" name="poscats">
                 @if(!empty($categories))
@@ -12,7 +12,7 @@
                 @endif
             </select>
         </div>
-        <input type="text" name="search" placeholder="{{ __('shop::app.headers.search') }}">
+        <input type="text" name="term" placeholder="{{ __('shop::app.headers.search') }}">
         <button><i class="lnr lnr-magnifier"></i></button>
     </form>
 </div>

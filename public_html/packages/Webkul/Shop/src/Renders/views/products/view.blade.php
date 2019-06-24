@@ -47,7 +47,7 @@
                                 @include('shop::products.view.price', ['product' => $product])
                                 @include('shop::products.view.short-desc', ['product' => $product])
                                 @include('shop::products.view.choose-option', ['product' => $product])
-                                @include('shop::products.view.pro-actions', ['product', $product])
+                                @include('shop::products.view.pro-actions')
                                 @include('shop::products.view.in-stock', ['product', $product])
                                 @include('shop::products.view.social')
                             </div>
