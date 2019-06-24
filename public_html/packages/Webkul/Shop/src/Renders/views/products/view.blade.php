@@ -88,6 +88,8 @@
 
 @push('footer_js')
     <script type="text/javascript">
+        var id = @json($product['id']);
+        var type = @json($product['type']);
         var config = @json($config);
         var galleryImages = @json($images);
     </script>

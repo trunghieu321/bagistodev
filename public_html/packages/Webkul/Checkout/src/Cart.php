@@ -205,10 +205,11 @@ class Cart {
             } else {
                 $result = $this->createItem($id, $data);
             }
-
-            return $result;
+            echo json_encode($result);
+            exit();
         } else {
-            return $this->create($id, $data);
+            echo json_encode($this->create($id, $data));
+            exit();
         }
     }
 
@@ -270,19 +271,6 @@ class Cart {
 
             if (! $canAdd) {
                 session()->flash('warning', trans('shop::app.checkout.cart.quantity.inventory_warning'));
-
-                return false;
-            }
-        }
-
-        //Check if the product's information is proper or not
-        if (! isset($data['product']) || !isset($data['quantity'])) {
-            session()->flash('error', trans('shop::app.checkout.cart.integrity.missing_fields'));
-
-            return false;
-        } else {
-            if ($product->type == 'configurable' && !isset($data['super_attribute'])) {
-                session()->flash('error', trans('shop::app.checkout.cart.integrity.missing_options'));
 
                 return false;
             }
@@ -575,6 +563,7 @@ class Cart {
             ]);
 
         } elseif (session()->has('cart')) {
+            var_dump(session()->get('cart')->id);
             $cart = $this->cart->find(session()->get('cart')->id);
         }
 

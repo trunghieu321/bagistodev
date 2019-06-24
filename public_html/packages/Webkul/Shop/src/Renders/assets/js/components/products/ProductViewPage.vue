@@ -18,9 +18,15 @@
             }
         },
         created () {
-            this.config = config;
-            this.selectedProductId = this.productIdActive();
-            var productId = this.selectedProductId;
+            if(type == "simple") {
+                this.selectedProductId = id;
+                var productId = this.selectedProductId;
+                this.getProduct(productId);
+            } else {
+                this.config = config;
+                this.selectedProductId = this.productIdActive();
+                var productId = this.selectedProductId;
+            }
             this.getProduct(productId);
         },
         methods: {
@@ -68,8 +74,9 @@
                 var productId = this.selectedProductId;
                 var quantity = $('input[name="quantity"]').val();
                 let token = document.head.querySelector('meta[name="csrf-token"]').content;
+                var selected_configurable_option = productId;
 
-                axios.post("../checkout/cart/add/"+productId, {'quantity' : quantity, '_token': token})
+                axios.post("../checkout/cart/add/"+productId, {'selected_configurable_option': selected_configurable_option,'quantity' : quantity, '_token': token})
                     .then(response => {
                         console.log(response)
                     })
