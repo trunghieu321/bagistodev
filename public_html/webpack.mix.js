@@ -11,4 +11,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('packages/Webkul/Shop/src/Renders/assets/js/app.js', 'public/themes/truemart/assets/js');
+mix.js('packages/Webkul/Shop/src/Resources/assets/js/app.js', 'public/themes/truemart/assets/js');

@@ -29,13 +29,13 @@ class ShopServiceProvider extends ServiceProvider
     {
         include __DIR__ . '/../Http/routes.php';
 
-        $this->loadTranslationsFrom(__DIR__ . '/../Renders/lang', 'shop');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'shop');
 
         $this->publishes([
-            __DIR__ . '/../../src/Renders/assets' => public_path('themes/truemart/assets'),
+            __DIR__ . '/../../src/Resources/assets' => public_path('themes/truemart/assets'),
         ], 'public');
 
-        $this->loadViewsFrom(__DIR__ . '/../Renders/views', 'shop');
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'shop');
 
         $router->aliasMiddleware('locale', Locale::class);
         $router->aliasMiddleware('theme', Theme::class);
