@@ -1,10 +1,10 @@
 <div class="box-quantity d-flex hot-product2 mt-20">
-    <form method="POST" id="product-form" action="{{ route('cart.add', $product['id']) }}">
+    <form method="POST" id="product-form" action="{{ route('cart.add', $product['id']) }}" @click="addCart($event)">>
         <div class="pro-actions">
             <input class="quantity mr-15" name="quantity" type="number" min="1" value="1">
             <input type="hidden" id="selected_configurable_option" name="selected_configurable_option" value="{{$product['id']}}">
             <div class="actions-primary">
-                <a @click="addCart($event)"  data-original-title="Add to Cart"> + Add To Cart</a>
+                <a data-original-title="Add to Cart"> + Add To Cart</a>
             </div>
 
             <div class="actions-secondary">
