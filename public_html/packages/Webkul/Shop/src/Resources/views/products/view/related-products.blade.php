@@ -1,3 +1,4 @@
+{!! view_render_event('bagisto.shop.products.view.related-products.before', ['product' => $product]) !!}
 @if ($product->related_products()->count())
 <!-- Realted Products Start Here -->
 <div class="hot-deal-products off-white-bg pt-100 pb-90 pt-sm-60 pb-sm-50">
@@ -87,3 +88,4 @@
 </div>
 <!-- Realated Products End Here -->
 @endif
+{!! view_render_event('bagisto.shop.products.view.related-products.after', ['product' => $product]) !!}

@@ -4,9 +4,8 @@
     @inject ('configurableOptionHelper', 'Webkul\Product\Helpers\ConfigurableOption')
     @inject ('productImageHelper', 'Webkul\Product\Helpers\ProductImage')
     @php
-        $pro_flat_url_key = $product['url_key'];
-        $pro_flat_short_desc = $product['short_description'];
-        $pro_flat_description = $product['description'];
+        $key = $product['url_key'];
+
         $config = $configurableOptionHelper->getConfigurationConfig($product);
         $images = $productImageHelper->getGalleryImages($product);
     @endphp
@@ -17,7 +16,7 @@
                 <ul class="d-flex align-items-center">
                     <li><a href="{{route('shop.home.index')}}">Home</a></li>
                     <li><a>Product</a></li>
-                    <li class="active"><a href="{{route('shop.products.index', $pro_flat_url_key)}}"></a></li>
+                    <li class="active"><a href="{{route('shop.products.index', $key)}}"></a></li>
                 </ul>
             </div>
         </div>

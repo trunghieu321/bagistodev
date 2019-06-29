@@ -1,3 +1,4 @@
+{!! view_render_event('bagisto.shop.products.view.review.before', ['product' => $product]) !!}
 <div id="review" class="tab-pane fade">
     <!-- Reviews Start -->
     <div class="review border-default universal-padding">
@@ -100,3 +101,5 @@
     </div>
     <!-- Reviews End -->
 </div>
+
+{!! view_render_event('bagisto.shop.products.view.review.after', ['product' => $product]) !!}

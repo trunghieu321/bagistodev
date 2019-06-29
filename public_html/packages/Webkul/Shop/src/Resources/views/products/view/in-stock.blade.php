@@ -1,3 +1,4 @@
+{!! view_render_event('bagisto.shop.products.view.in-stock.before', ['product' => $product]) !!}
 <div class="pro-ref mt-20">
     <p>
         <span v-if="product.in_stock" class="in-stock">
@@ -10,3 +11,4 @@
         </span>
     </p>
 </div>
+{!! view_render_event('bagisto.shop.products.view.in-stock.after', ['product' => $product]) !!}

@@ -1,3 +1,5 @@
+{!! view_render_event('bagisto.shop.products.view.choose-option.before', ['product' => $product]) !!}
+@if($product['type'] == "configurable")
 <div id="available_options">
     <h5>Available Options</h5>
     <div class="form-group">
@@ -31,3 +33,6 @@
         </div>
     </div>
 </div>
+
+{!! view_render_event('bagisto.shop.products.view.choose-option.after', ['product' => $product]) !!}
+@endif

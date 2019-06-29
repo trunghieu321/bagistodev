@@ -29,13 +29,19 @@ class Product extends JsonResource
     public function toArray($request)
     {
         $product = $this->product ? $this->product : $this;
-
+        $discount = 0;
+        if($this->cost > 0) {
+            $discount = (($this->price - $this->cost)/$this->price)*100;
+        }
         return [
             'id' => $product->id,
             'type' => $product->type,
             'name' => $this->name,
             'price' => $this->price,
-            'formated_price' => core()->currency($this->price),
+            'cost' => $this->cost,
+            'formated_price' => number_format($this->price),
+            'formated_cost' => number_format($this->cost),
+            'discount' => round($discount),
             'description' => $this->description,
             'sku' => $this->sku,
             'images' => ProductImage::collection($product->images),

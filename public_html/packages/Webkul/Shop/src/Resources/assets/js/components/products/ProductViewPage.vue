@@ -7,10 +7,14 @@
                 selectedProductId: '',
                 product: [
                     {
+                        id: "",
+                        type: "",
                         name: "",
                         sku: "",
                         price: "",
+                        cost: "",
                         in_stock: "",
+                        discount: "",
                     }
                 ],
                 galleryImages: [],
@@ -18,16 +22,10 @@
             }
         },
         created () {
-            if(type == "simple") {
-                this.selectedProductId = id;
-                var productId = this.selectedProductId;
+            var productId = id;
+            if(typeof productId !== "undefined") {
                 this.getProduct(productId);
-            } else {
-                this.config = config;
-                this.selectedProductId = this.productIdActive();
-                var productId = this.selectedProductId;
             }
-            this.getProduct(productId);
         },
         methods: {
             productIdActive () {
@@ -47,7 +45,6 @@
                 axios.get('../api/products/'+productId)
                 .then(response => {
                     this.product = response.data.data;
-                    this.galleryImages = response.data.data.images;
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -71,18 +68,7 @@
             addCart () {
                 if (!event)
                     return;
-                var productId = this.selectedProductId;
-                var quantity = $('input[name="quantity"]').val();
-                let token = document.head.querySelector('meta[name="csrf-token"]').content;
-                var selected_configurable_option = productId;
-
-                axios.post("../checkout/cart/add/"+productId, {'selected_configurable_option': selected_configurable_option,'quantity' : quantity, '_token': token})
-                    .then(response => {
-                        console.log(response)
-                    })
-                    .catch(e => {
-                        this.errors.push(e)
-                    })
+                document.getElementById('product-form').submit();
             }
         }
     }
