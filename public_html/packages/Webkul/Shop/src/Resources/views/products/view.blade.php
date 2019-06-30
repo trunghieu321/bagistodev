@@ -4,24 +4,12 @@
     @inject ('configurableOptionHelper', 'Webkul\Product\Helpers\ConfigurableOption')
     @inject ('productImageHelper', 'Webkul\Product\Helpers\ProductImage')
     @php
+        $routeName = "shop.products.index";
         $key = $product['url_key'];
-
         $config = $configurableOptionHelper->getConfigurationConfig($product);
         $images = $productImageHelper->getGalleryImages($product);
     @endphp
-    <!-- Breadcrumb Start -->
-    <div class="breadcrumb-area">
-        <div class="container">
-            <div class="breadcrumb">
-                <ul class="d-flex align-items-center">
-                    <li><a href="{{route('shop.home.index')}}">Home</a></li>
-                    <li><a>Product</a></li>
-                    <li class="active"><a href="{{route('shop.products.index', $key)}}"></a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- Container End -->
-    </div>
+    @include('shop::layouts.partials.breadcrumb', ['routeName' => $routeName, 'key' => $key])
     <!-- Breadcrumb End -->
     <!-- Product Thumbnail Start -->
     <product-view inline-template>

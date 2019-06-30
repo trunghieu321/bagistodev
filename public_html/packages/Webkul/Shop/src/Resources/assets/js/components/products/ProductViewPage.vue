@@ -64,11 +64,6 @@
                 
                 this.getProduct(productId);
                 this.selectedProductId = productId;
-            },
-            addCart () {
-                if (!event)
-                    return;
-                document.getElementById('product-form').submit();
             }
         }
     }
