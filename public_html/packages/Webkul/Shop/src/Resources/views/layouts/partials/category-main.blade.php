@@ -19,7 +19,7 @@
                             if ($item->parent_id == $parent_id)
                             {
                                 echo $char. '<li>';
-                                echo $char. '<a>';
+                                echo $char. '<a href="'.route('shop.categories.index', $item->slug).'">';
                                 if($item->image) {
                                     echo $char. '<span>';
                                     echo $char. '<img src="storage/'.$item->image.'" alt="'.$item->name.'">';

@@ -83,11 +83,11 @@
                                             </h4>
                                             <p>
                                                 @if($pro_flat_cost > 0)
-                                                <del class="prev-price">{{ number_format($pro_flat_price) }}</del>
-                                                <span class="price">{{ number_format($pro_flat_cost) }}</span>
+                                                <del class="prev-price">{{ number_format($pro_flat_price) }} đ</del>
+                                                <span class="price">{{ number_format($pro_flat_cost) }} đ</span>
                                                 @endif
                                                 @if($pro_flat_cost == 0)
-                                                <span class="price">{{ number_format($pro_flat_price) }}</span>
+                                                <span class="price">{{ number_format($pro_flat_price) }} đ</span>
                                                 @endif
                                             </p>
                                             @if($discount > 0)
@@ -97,15 +97,16 @@
                                             </div>
                                             @endif
                                         </div>
-                                        <div class="pro-actions">
-                                            <div class="actions-primary">
-                                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
+                                        <form method="POST" id="product-form" action="{{ route('cart.add', $valProduct['pro_flat_id']) }}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" id="selected_configurable_option" name="selected_configurable_option" value="{{$valProduct['pro_flat_id']}}">
+                                            <div class="pro-actions">
+                                                <input class="quantity mr-15" name="quantity" type="hidden" value="1">
+                                                <div class="actions-primary">
+                                                    <button type="submit"> + Add To Cart</button>
+                                                </div>
                                             </div>
-                                            <div class="actions-secondary">
-                                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!-- Product Content End -->
                                 </div>

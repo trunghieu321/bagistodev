@@ -6,31 +6,37 @@
 @if($cart)
     @php
         Cart::collectTotals();
-    $items = $cart->items;
+        $items = $cart->items;
     @endphp
     <div class="cart-box mt-all-30">
         <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
-            <li><a href="#"><i class="lnr lnr-cart"></i><span class="my-cart"><span
-                                class="total-pro">2</span><span>cart</span></span></a>
+            <li><a href="#">
+                    <i class="lnr lnr-cart"></i>
+                    <span class="my-cart">
+                        <span class="total-pro">{{ $cart->items->count() }}</span>
+                        <span>cart</span>
+                    </span>
+                </a>
                 <ul class="ht-dropdown cart-box-width">
                     <li>
                     @if($items)
                         <!-- Cart Box Start -->
                         @foreach($items as $item)
                         @php
+                        $price = $item->price - $item->discount_amount;
+                        $total = $item->total - $item->discount_amount;
                         $images = $productImageHelper->getProductBaseImage($item->product);
                         @endphp
                             <div class="single-cart-box">
                                 <div class="cart-img">
-                                    <a href="#">
-                                        <img src="{{ $images['small_image_url'] }}"
-                                                        alt="{{ $item->name }}">
+                                    <a>
+                                        <img src="{{ $images['small_image_url'] }}" alt="{{ $item->name }}">
                                     </a>
                                     <span class="pro-quantity">{{ $item->quantity }}X</span>
                                 </div>
                                 <div class="cart-content">
-                                    <h6><a href="product.html">{{ $item->name }}</a></h6>
-                                    <span class="cart-price">{{ number_format($item->price) }} đ</span>
+                                    <h6><a>{{ $item->name }}</a></h6>
+                                    <span class="cart-price">{{ number_format($price) }} đ</span>
                                 </div>
                                 <a class="del-icone" href="{{ url('checkout/cart/remove', $item->id) }}"><i class="ion-close"></i></a>
                             </div>
@@ -40,8 +46,7 @@
                         <!-- Cart Footer Inner Start -->
                         <div class="cart-footer">
                             <ul class="price-content">
-                                <li>Subtotal <span>{{ number_format($item->base_total) }} đ</span></li>
-                                <li>Total <span>{{ number_format($item->total) }} đ</span></li>
+                                <li>Total <span>{{ number_format($total) }} đ</span></li>
                             </ul>
                             <div class="cart-actions text-center">
                                 <a class="cart-checkout" href="{{ route('shop.checkout.cart.index') }}">{{ __('shop::app.headers.checkout') }}</a>

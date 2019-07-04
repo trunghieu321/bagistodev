@@ -6,7 +6,7 @@
                     <option value="0">All categories</option>
                     @foreach($categories as $keyCate => $valCate)
                         @if($valCate->parent_id == 1)
-                            <option value="{{$keyCate['id']}}">{{$valCate['name']}}</option>
+                            <option value="{{$valCate['id']}}">{{$valCate['name']}}</option>
                         @endif
                     @endforeach
                 @endif

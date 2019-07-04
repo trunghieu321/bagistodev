@@ -159,6 +159,16 @@ class Cart {
      */
     public function create($id, $data, $qty = 1)
     {
+        $product = $this->product->findOnebyField('id', $data['selected_configurable_option']);
+        if(!$product) {
+            session()->flash('error', trans('shop::app.checkout.cart.create-error'));
+            return false;
+        }
+        $discount = 0;
+        if($product->cost > 0) {
+            $discount = $product->price - $product->cost;
+        }
+
         $cartData = [
             'channel_id' => core()->getCurrentChannel()->id,
 
@@ -169,7 +179,11 @@ class Cart {
             'channel_currency_code' => core()->getChannelBaseCurrencyCode(),
 
             'cart_currency_code' => core()->getCurrentCurrencyCode(),
-            'items_count' => 1
+            'items_count' => 1,
+
+            'discount_amount' => $discount,
+
+            'base_discount_amount' => $discount
         ];
 
         //Authentication details
@@ -317,6 +331,12 @@ class Cart {
             'product_id' => $product['id'],
             'additional' => $data,
         ];
+
+        if($product->cost > 0) {
+            $discount = $product->price - $product->cost;
+            $parentData['discount_amount'] = $discount;
+            $parentData['base_discount_amount'] = $discount;
+        }
 
         if ($product->type == 'configurable') {
             $attributeDetails = $this->getProductAttributeOptionDetails($childProduct);
@@ -843,7 +863,8 @@ class Cart {
             $items = $cart->items;
 
             foreach ($items as $item) {
-                $productFlat = $item->product_flat;
+
+                $productFlat = $this->product->findOneByField('id', $item->product_id);
 
                 if ($productFlat->type == 'configurable') {
                     if ($productFlat->sku != $item->sku) {

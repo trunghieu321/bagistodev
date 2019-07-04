@@ -5,7 +5,7 @@
         <span v-if="product.cost > 0" class="price">@{{ product.formated_cost }} đ</span>
 
         <span v-if="product.cost == 0" class="price">@{{ product.formated_price }} đ</span>
-        <span class="saving-price">save @{{ product.discount }}%</span>
+        <span v-if="product.discount != 0" class="saving-price">save @{{ product.discount }}%</span>
     </p>
 </div>
 {!! view_render_event('bagisto.shop.products.view.price.after', ['product' => $product]) !!}

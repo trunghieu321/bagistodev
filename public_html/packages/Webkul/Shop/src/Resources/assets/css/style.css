@@ -1343,6 +1343,27 @@ li.megamenu-img a {
           justify-content: space-around;
   padding-right: 6px;
 }
+.actions-primary button {
+  background: #eeeeee none repeat scroll 0 0;
+  border: 1px solid #cbcbcb;
+  border-radius: 3px;
+  color: #333333;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: all 400ms ease-in 0s;
+    -ms-transition: all 400ms ease-in 0s;
+    -transition: all 400ms ease-in 0s;
+    transition: all 400ms ease-in 0s;
+    width: 100%;
+    margin: 0 0 10px;
+    font-weight: 700;
+    display: block;
+    font-family: "Lato",sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+}
 .actions-primary a,.product-description .compare-cart,
 .cart-main-area.wish-list .product-add-to-cart a {
   background: #eeeeee none repeat scroll 0 0;
@@ -1367,6 +1388,11 @@ li.megamenu-img a {
 }
 .actions-primary a:hover,.product-description .compare-cart:hover,
 .cart-main-area.wish-list .product-add-to-cart a:hover {
+    background: #e62e04;
+    color: #fff;
+    border-color: #e62e04;
+}
+.actions-primary button:hover {
     background: #e62e04;
     color: #fff;
     border-color: #e62e04;
@@ -2435,6 +2461,15 @@ li.megamenu-img a {
   margin-right: 10px;
   width: 150px;
 }
+.box-quantity.hot-product2 .actions-primary button {
+    background: #e62e04 none repeat scroll 0 0;
+    border-color: #e62e04;
+    color: #fff;
+    height: 43px;
+    margin-bottom: 0;
+    margin-right: 10px;
+    width: 150px;
+  }
 /*---------------------------------
     thumb product css start
 -----------------------------------*/

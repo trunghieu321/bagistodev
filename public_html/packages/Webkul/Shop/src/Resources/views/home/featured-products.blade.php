@@ -1,3 +1,4 @@
+@inject ('productImageHelper', 'Webkul\Product\Helpers\ProductImage')
 <div class="container">
     <!-- Product Title Start -->
     <div class="post-title pb-30">
@@ -6,38 +7,34 @@
     <!-- Product Title End -->
     <!-- Hot Deal Product Activation Start -->
     <div class="hot-deal-active owl-carousel">
-
     @if(!empty($products))
-        @foreach($products['products'] as $keyProduct => $valProduct)
+        @foreach($products as $key => $item)
             @php
-                $pro_flat_name = $valProduct['pro_flat_name'];
-                $pro_flat_url_key = $valProduct['pro_flat_url_key'];
-                $pro_flat_price = $valProduct['pro_flat_price'];
-                $pro_flat_cost = $valProduct['pro_flat_cost'];
+                $name = $item['name'];
+                $url_key = $item['url_key'];
+                $price = $item['price'];
+                $cost = $item['cost'];
 
-                if(isset($valProduct['product_images'][0])) {
-                    $pro_image_path0 = $valProduct['product_images'][0]['pro_img_path'];
-                }
-                
-                if(isset($valProduct['product_images'][1])) {
-                    $pro_image_path1 = $valProduct['product_images'][1]['pro_img_path'];
-                }
-                
+                $image = $productImageHelper->getProductBaseImage($item->product);
+                $images = $productImageHelper->getGalleryImages($item->product);
+
                 $discount = 0;
-                if($pro_flat_cost > 0) {
-                    $discount = (($pro_flat_price - $pro_flat_cost)/$pro_flat_price)*100;
+                if($cost > 0) {
+                    $discount = (($price - $cost)/$price)*100;
                 }
             @endphp
             <!-- Single Product Start -->
                 <div class="single-product">
                     <!-- Product Image Start -->
                     <div class="pro-img">
-                        <a href="{{ route('shop.products.index', $pro_flat_url_key) }}">
-                            @if(!empty($pro_image_path0))
-                                <img class="primary-img" src="{{asset("storage/".$pro_image_path0)}}" alt="{{$pro_flat_name}}">
-                            @endif
-                            @if(!empty($pro_image_path1))
-                                <img class="secondary-img" src="{{asset("storage/".$pro_image_path1)}}" alt="{{$pro_flat_name}}">
+                        <a href="{{ route('shop.products.index', $url_key) }}">
+                            <img class="primary-img" src="{{ $image['medium_image_url'] }}" alt="single-product">
+                            @if(count($images) == 2)
+                                @foreach($images as $keyImage => $valImage)
+                                    @if($keyImage == 1)
+                                        <img class="secondary-img" src="{{ $valImage['medium_image_url'] }}" alt="single-product">
+                                    @endif
+                                @endforeach
                             @endif
                         </a>
                         <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
@@ -47,17 +44,17 @@
                     <div class="pro-content">
                         <div class="pro-info">
                             <h4>
-                                <a href="{{ route('shop.products.index', $pro_flat_url_key) }}">
-                                    {{$pro_flat_name}}
+                                <a href="{{ route('shop.products.index', $url_key) }}">
+                                    {{$name}}
                                 </a>
                             </h4>
                             <p>
-                                @if($pro_flat_cost > 0)
-                                <del class="prev-price">{{ number_format($pro_flat_price) }}</del>
-                                <span class="price">{{ number_format($pro_flat_cost) }}</span>
+                                @if($cost > 0)
+                                    <del class="prev-price">{{ number_format($price) }} đ</del>
+                                    <span class="price">{{ number_format($cost) }} đ</span>
                                 @endif
-                                @if($pro_flat_cost == 0)
-                                <span class="price">{{ number_format($pro_flat_price) }}</span>
+                                @if($cost == 0)
+                                    <span class="price">{{ number_format($price) }} đ</span>
                                 @endif
                             </p>
                             @if($discount > 0)
@@ -67,15 +64,16 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="pro-actions">
-                            <div class="actions-primary">
-                                <a href="cart.html" title="Add to Cart"> + Add To Cart</a>
+                        <form method="POST" id="product-form" action="{{ route('cart.add', $item['id']) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" id="selected_configurable_option" name="selected_configurable_option" value="{{$item['id']}}">
+                            <div class="pro-actions">
+                                <input class="quantity mr-15" name="quantity" type="hidden" value="1">
+                                <div class="actions-primary">
+                                    <button type="submit"> + Add To Cart</button>
+                                </div>
                             </div>
-                            <div class="actions-secondary">
-                                <a href="compare.html" title="Compare"><i class="lnr lnr-sync"></i> <span>Add To Compare</span></a>
-                                <a href="wishlist.html" title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <!-- Product Content End -->
                 </div>

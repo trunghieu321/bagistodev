@@ -26,3 +26,5 @@
 <link rel="stylesheet" href="{{asset("themes/truemart/assets")}}/css/style.css">
 <!-- Responsive css -->
 <link rel="stylesheet" href="{{asset("themes/truemart/assets")}}/css/responsive.css">
+<!-- Modernizer js -->
+<script src="{{asset("themes/truemart/assets")}}/js/vendor/modernizr-3.5.0.min.js"></script>

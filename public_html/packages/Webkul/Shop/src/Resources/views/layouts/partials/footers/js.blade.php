@@ -1,5 +1,3 @@
-<!-- Modernizer js -->
-<script src="{{asset("themes/truemart/assets")}}/js/vendor/modernizr-3.5.0.min.js"></script>
 <!-- jquery 3.2.1 -->
 <script src="{{asset("themes/truemart/assets")}}/js/vendor/jquery-3.2.1.min.js"></script>
 <!-- Countdown js -->
@@ -26,4 +24,3 @@
 <script src="{{asset("themes/truemart/assets")}}/js/plugins.js"></script>
 <!-- Main activaion js -->
 <script src="{{asset("themes/truemart/assets")}}/js/main.js"></script>
-<script src="{{asset("themes/truemart/assets")}}/js/app.js"></script>

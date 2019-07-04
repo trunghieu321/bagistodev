@@ -2,7 +2,7 @@
     <ul>
         <li><a href="#">{{ __('shop::app.headers.free-shipping-on-order-over-99') }}</a></li>
         <li><a href="#">{{ __('shop::app.headers.shopping-cart') }}</a></li>
-        <li><a href="#">{{ __('shop::app.headers.checkout') }}</a></li>
+        <li><a href="{{ route('shop.checkout.cart.index') }}">{{ __('shop::app.headers.checkout') }}</a></li>
     </ul>
     <ul>
         <li><span>{{ __('shop::app.headers.language') }}</span> <a href="#">{{ __('shop::app.headers.english') }}<i class="lnr lnr-chevron-down"></i></a>
@@ -23,8 +23,8 @@
         <li><a href="#">{{ __('shop::app.headers.my-account') }}<i class="lnr lnr-chevron-down"></i></a>
             <!-- Dropdown Start -->
             <ul class="ht-dropdown">
-                <li><a href="login.html">{{ __('shop::app.headers.login') }}</a></li>
-                <li><a href="register.html">{{ __('shop::app.headers.register') }}</a></li>
+                <li><a href="{{ route('customer.session.index') }}">{{ __('shop::app.headers.login') }}</a></li>
+                <li><a href="{{ route('customer.register.index') }}">{{ __('shop::app.headers.register') }}</a></li>
             </ul>
             <!-- Dropdown End -->
         </li>

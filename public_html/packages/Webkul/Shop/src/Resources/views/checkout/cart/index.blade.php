@@ -3,8 +3,15 @@
 @section('content')
 @php
     $routeName = "shop.checkout.cart.index";
+    $lastLi = "Checkout";
+    $nextLi = "Cart";
 @endphp
-@include('shop::layouts.partials.breadcrumb', ['routeName' => $routeName, 'key' => []])
+@include('shop::layouts.partials.breadcrumb', [ 'routeName' => $routeName,
+                                                'key' => [],
+                                                'lastLi' => $lastLi,
+                                                'nextLi' => $nextLi
+                                                ])
+
 @inject ('productImageHelper', 'Webkul\Product\Helpers\ProductImage')
 @php
     $cart = cart()->getCart();
@@ -13,7 +20,7 @@
 @if($cart)
     @php
         Cart::collectTotals();
-    $items = $cart->items;
+        $items = $cart->items;
     @endphp
 <div class="cart-main-area ptb-sm-60">
     <div class="container">
@@ -39,7 +46,8 @@
                             @if($items)
                                 @foreach($items as $item)
                                 @php
-                                dd($item);
+                                $price = $item->price - $item->discount_amount;
+                                $total = $item->total - $item->discount_amount;
                                 $images = $productImageHelper->getProductBaseImage($item->product);
                                 @endphp
                             <tr>
@@ -49,9 +57,9 @@
                                     </a>
                                 </td>
                                 <td class="product-name"><a href="">{{ $item->name }}</a></td>
-                                <td class="product-price"><span class="amount">{{ number_format($item->price) }} đ</span></td>
+                                <td class="product-price"><span class="amount">{{ number_format($price) }} đ</span></td>
                                 <td class="product-quantity"><input type="number" name="qty[{{$item->id}}]" value="{{ $item->quantity }}"></td>
-                                <td class="product-subtotal">{{ number_format($item->total) }} đ</td>
+                                <td class="product-subtotal">{{ number_format($total) }} đ</td>
                                 <td class="product-remove"> 
                                     <a href="{{ url('checkout/cart/remove', $item->id) }}">
                                         <i class="fa fa-times" aria-hidden="true"></i>
@@ -82,10 +90,6 @@
                                 <br>
                                 <table class="float-md-right">
                                     <tbody>
-                                    <tr class="cart-subtotal">
-                                        <th>Subtotal</th>
-                                        <td><span class="amount">$215.00</span></td>
-                                    </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
                                         <td>
@@ -95,7 +99,7 @@
                                     </tbody>
                                 </table>
                                 <div class="wc-proceed-to-checkout">
-                                    <a href="#">Proceed to Checkout</a>
+                                    <a href="{{ route('shop.checkout.onepage.index' )}}">Proceed to Checkout</a>
                                 </div>
                             </div>
                         </div>

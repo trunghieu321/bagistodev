@@ -8,8 +8,15 @@
         $key = $product['url_key'];
         $config = $configurableOptionHelper->getConfigurationConfig($product);
         $images = $productImageHelper->getGalleryImages($product);
+        $routeName = "shop.products.index";
+        $lastLi = "Product";
+        $nextLi = $key;
     @endphp
-    @include('shop::layouts.partials.breadcrumb', ['routeName' => $routeName, 'key' => $key])
+    @include('shop::layouts.partials.breadcrumb', [ 'routeName' => $routeName,
+                                                    'key' => $key,
+                                                    'lastLi' => $lastLi,
+                                                    'nextLi' => $nextLi
+                                                    ])
     <!-- Breadcrumb End -->
     <!-- Product Thumbnail Start -->
     <product-view inline-template>
@@ -80,4 +87,5 @@
         var config = @json($config);
         var galleryImages = @json($images);
     </script>
+    <script src="{{asset("themes/truemart/assets")}}/js/app.js"></script>
 @endpush
