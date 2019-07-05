@@ -46,7 +46,6 @@
                                         $pro_flat_cost0 = $valCategory['products'.$tmp][0]['pro_flat_cost'];
                                         $pro_flat_new0 = $valCategory['products'.$tmp][0]['pro_flat_new'];
                                         $discount0 = 0;
-                                        ;
                                         if(number_format($pro_flat_cost0) != 0) {
                                             $discount0 = (($pro_flat_price0 - $pro_flat_cost0)/$pro_flat_cost0)*100;
                                         }
@@ -121,10 +120,10 @@
                                             <div class="pro-img">
                                                 <a href="{{route('shop.products.index', $pro_flat_url_key1)}}">
                                                     @if(!empty($valCategory['products'.$tmp][1]['product_images'][0]))
-                                                        <img class="primary-img" src="{{asset("storage/".$valCategory['products'.$tmp][1]['product_images'][0]['pro_img_path'])}}" alt="single-product">
+                                                        <img class="primary-img" src="{{asset("cache/medium/".$valCategory['products'.$tmp][1]['product_images'][0]['pro_img_path'])}}" alt="single-product">
                                                     @endif
                                                     @if(!empty($valCategory['products'.$tmp][1]['product_images'][1]))
-                                                        <img class="secondary-img" src="{{asset("storage/".$valCategory['products'.$tmp][1]['product_images'][1]['pro_img_path'])}}" alt="single-product">
+                                                        <img class="secondary-img" src="{{asset("cache/medium/".$valCategory['products'.$tmp][1]['product_images'][1]['pro_img_path'])}}" alt="single-product">
                                                     @endif
                                                 </a>
                                                 <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>

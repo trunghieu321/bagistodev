@@ -29,7 +29,7 @@
                     <div class="pro-img">
                         <a href="{{ route('shop.products.index', $url_key) }}">
                             <img class="primary-img" src="{{ $image['medium_image_url'] }}" alt="single-product">
-                            @if(count($images) == 2)
+                            @if(count($images) >= 2)
                                 @foreach($images as $keyImage => $valImage)
                                     @if($keyImage == 1)
                                         <img class="secondary-img" src="{{ $valImage['medium_image_url'] }}" alt="single-product">
